@@ -11,6 +11,22 @@ jsonFile = '/Users/ila/Documents/GitDeliberry/CatalogJSON.json'
 
 
 
+# Список необходимых ключей
+required_keys = [
+    "Tilda_UID",
+    "Mark",
+    "Category",
+    "Title",
+    "Description",
+    "Text",
+    "Photo",
+    "Price",
+    "Price_Old",
+    "Editions",
+    "External_ID",
+    "Parent_UID"
+]
+
 # Чтение данных из CSV файла с использованием точки с запятой в качестве разделителя
 with open(csvFile, mode='r', encoding='utf-8') as file:
     csvReader = csv.DictReader(file, delimiter=';')  # Указываем delimiter как ';'
@@ -22,7 +38,15 @@ with open(csvFile, mode='r', encoding='utf-8') as file:
         for key, value in row.items():
             # Заменяем пробелы на нижние подчеркивания в ключах
             new_key = key.replace(' ', '_')
-            new_row[new_key] = value
+            # Проверяем, входит ли новый ключ в список необходимых ключей
+            if new_key in required_keys:
+                new_row[new_key] = value
+        
+        # Проверяем, что новый словарь содержит 12 ключей
+        if len(new_row) != len(required_keys):
+            print(f"Ошибка: элемент не содержит {len(required_keys)} ключей. Программа завершена.")
+            sys.exit(1)  # Завершение программы с кодом ошибки
+
         data.append(new_row)
 
 # Запись данных в JSON файл
