@@ -14,7 +14,16 @@ jsonFile = '/Users/ila/Documents/GitDeliberry/CatalogJSON.json'
 # Чтение данных из CSV файла с использованием точки с запятой в качестве разделителя
 with open(csvFile, mode='r', encoding='utf-8') as file:
     csvReader = csv.DictReader(file, delimiter=';')  # Указываем delimiter как ';'
-    data = list(csvReader)  # Преобразуем данные в список словарей
+    
+    # Преобразуем данные в список словарей с измененными ключами
+    data = []
+    for row in csvReader:
+        new_row = {}
+        for key, value in row.items():
+            # Заменяем пробелы на нижние подчеркивания в ключах
+            new_key = key.replace(' ', '_')
+            new_row[new_key] = value
+        data.append(new_row)
 
 # Запись данных в JSON файл
 with open(jsonFile, mode='w', encoding='utf-8') as file:
