@@ -24,7 +24,8 @@ required_keys = [
     "Price_Old",
     "Editions",
     "External_ID",
-    "Parent_UID"
+    "Parent_UID",
+    "Url"
 ]
 
 # Чтение данных из CSV файла с использованием точки с запятой в качестве разделителя
@@ -42,7 +43,7 @@ with open(csvFile, mode='r', encoding='utf-8') as file:
             if new_key in required_keys:
                 new_row[new_key] = value
         
-        # Проверяем, что новый словарь содержит 12 ключей
+        # Проверяем, что новый словарь содержит 13 ключей
         if len(new_row) != len(required_keys):
             print(f"Ошибка: элемент не содержит {len(required_keys)} ключей. Программа завершена.")
             sys.exit(1)  # Завершение программы с кодом ошибки
